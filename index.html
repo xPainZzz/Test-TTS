@@ -1,0 +1,37 @@
+<script>
+    // 1. Define aquí tus 36 audios (puedes automatizar esto)
+    const misAudios = [
+        { id: "P1", modelo: "Piper", archivo: "audios/piper_01.wav" },
+        { id: "B1", modelo: "Bark", archivo: "audios/bark_01.wav" },
+        { id: "S1", modelo: "Silero", archivo: "audios/silero_01.wav" },
+        { id: "T1", modelo: "PyTTS", archivo: "audios/pytts_01.wav" },
+        // ... añade los 36 aquí
+    ];
+
+    const container = document.getElementById('audio-container');
+
+    misAudios.forEach((audio, index) => {
+        const item = document.createElement('div');
+        item.className = 'audio-item';
+        item.innerHTML = `
+            <h3>Muestra #${index + 1}</h3>
+            <audio controls><source src="${audio.archivo}" type="audio/wav"></audio>
+            
+            <input type="hidden" name="id_${index}" value="${audio.id}">
+            <input type="hidden" name="modelo_${index}" value="${audio.modelo}">
+            
+            <div class="form-group">
+                <label>Transcripción:</label>
+                <textarea name="trans_text_${index}" required></textarea>
+            </div>
+            
+            <label>Claridad (1-5):</label>
+            <div class="likert">
+                ${.map(n => `
+                    <label><input type="radio" name="score_${index}" value="${n}" required> ${n}</label>
+                `).join('')}
+            </div>
+        `;
+        container.appendChild(item);
+    });
+</script>
